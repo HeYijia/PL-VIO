@@ -1,0 +1,19 @@
+<launch>
+    <arg name="config_path" default = "$(find feature_tracker)/../config/simdata/simdata_config.yaml" />
+	  <arg name="vins_path" default = "$(find feature_tracker)/../config/../" />
+
+    <node name="vins_estimator" pkg="vins_estimator" type="vins_estimator" output="screen">
+       <param name="config_file" type="string" value="$(arg config_path)" />
+       <param name="vins_folder" type="string" value="$(arg vins_path)" />
+    </node>
+
+    <node name="pub_imu" pkg="pub_imu_features" type="pub_imu" output="log">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+        <param name="vins_folder" type="string" value="$(arg vins_path)" />
+    </node>
+
+    <node name="pub_features" pkg="pub_imu_features" type="pub_feature" output="log">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+        <param name="vins_folder" type="string" value="$(arg vins_path)" />
+    </node>
+</launch>
